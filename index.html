@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Thejas Nagesh Gowda — ML Engineer</title>
+<meta name="description" content="ML Engineer building production-grade AI systems. MS in Artificial Intelligence at RIT." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #060608;
+    --surface: #0c0c10;
+    --card: #13131a;
+    --border: #1e1e2a;
+    --border-hover: #2e2e3e;
+    --text: #eeeef0;
+    --text-soft: #a0a0b0;
+    --text-dim: #6a6a7a;
+    --cyan: #22d3ee;
+    --cyan-dim: rgba(34,211,238,0.08);
+    --green: #34d399;
+    --green-dim: rgba(52,211,153,0.10);
+    --amber: #fbbf24;
+    --amber-dim: rgba(251,191,36,0.10);
+    --mono: 'JetBrains Mono','Fira Code','SF Mono',monospace;
+    --sans: 'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    --display: 'Playfair Display','Georgia',serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Noise background */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    transition: all 0.4s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .nav.scrolled {
+    background: rgba(6,6,8,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom-color: var(--border);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto; padding: 14px 32px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 14px; font-weight: 600;
+    color: var(--cyan); letter-spacing: 0.06em; cursor: pointer;
+  }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-dim); transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    max-width: 1000px; margin: 0 auto; padding: 100px 32px;
+    position: relative; z-index: 1;
+  }
+  .section-label {
+    font-family: var(--mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 36px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before {
+    content: ''; width: 32px; height: 1px; background: var(--cyan); opacity: 0.4;
+  }
+
+  /* ─── HERO ─── */
+  .hero { padding-top: 160px; padding-bottom: 40px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+  .hero-content { display: flex; gap: 48px; align-items: center; flex-wrap: wrap; }
+  .hero-text { flex: 1; min-width: 320px; }
+  .hero-subtitle { font-family: var(--mono); font-size: 12px; color: var(--text-dim); letter-spacing: 0.18em; margin-bottom: 32px; }
+  .hero h1 {
+    font-family: var(--display); font-size: 68px; font-weight: 700; font-style: italic;
+    line-height: 1.0; margin-bottom: 28px; color: var(--text); max-width: 650px;
+  }
+  .hero-name { font-size: 20px; font-weight: 500; color: var(--text-soft); margin-bottom: 8px; }
+  .hero-degree { font-family: var(--mono); font-size: 12px; color: var(--cyan); opacity: 0.7; margin-bottom: 20px; letter-spacing: 0.04em; }
+  .hero-desc { font-size: 15px; color: var(--text-dim); max-width: 540px; line-height: 1.7; margin-bottom: 40px; }
+  .hero-photo {
+    width: 240px; height: 300px; border-radius: 12px; overflow: hidden;
+    border: 2px solid var(--border); flex-shrink: 0;
+    box-shadow: 0 0 40px rgba(34,211,238,0.08);
+  }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .scroll-hint { margin-top: 60px; display: flex; flex-direction: column; gap: 8px; }
+  .scroll-hint span { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.15em; }
+  .scroll-hint div { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--cyan), transparent); }
+
+  /* ─── BUTTONS ─── */
+  .btn-group { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--mono); font-size: 11px; padding: 10px 24px;
+    border-radius: 6px; transition: all 0.25s; display: inline-block; cursor: pointer;
+  }
+  .btn-outline { color: var(--text); border: 1px solid var(--border); background: transparent; }
+  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-filled { color: var(--bg); background: var(--cyan); border: none; font-weight: 600; }
+  .btn-filled:hover { opacity: 0.85; }
+
+  /* ─── PROFILE ─── */
+  .profile-grid { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+  .profile-photo { width: 260px; height: 340px; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 20px; box-shadow: 0 4px 30px rgba(0,0,0,0.4); }
+  .profile-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .quick-facts { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+  .quick-facts-title { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.1em; margin-bottom: 12px; }
+  .fact-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .fact-key { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .fact-val { font-family: var(--sans); font-size: 12px; color: var(--text); }
+
+  .mentor-badge { background: var(--cyan-dim); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; margin-top: 14px; }
+  .mentor-badge-title { font-family: var(--mono); font-size: 9px; color: var(--cyan); letter-spacing: 0.12em; margin-bottom: 6px; }
+  .mentor-badge p { font-size: 12px; color: var(--text-soft); line-height: 1.5; }
+
+  .story-heading { font-family: var(--display); font-size: 32px; font-weight: 600; line-height: 1.2; margin-bottom: 24px; }
+  .story p { font-size: 14px; color: var(--text-soft); line-height: 1.8; margin-bottom: 18px; }
+
+  .hobbies-title { font-family: var(--mono); font-size: 10px; color: var(--text-dim); letter-spacing: 0.15em; margin-top: 36px; margin-bottom: 16px; }
+  .hobby-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }
+  .hobby-card .icon { font-size: 22px; margin-top: 2px; }
+  .hobby-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .hobby-card p { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+
+  .hobby-with-img { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; margin-bottom: 12px; }
+  .hobby-with-img .hobby-img { width: 120px; min-height: 100px; flex-shrink: 0; overflow: hidden; }
+  .hobby-with-img .hobby-img img { width: 100%; height: 100%; object-fit: cover; }
+  .hobby-with-img .hobby-text { padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; }
+  .hobby-with-img h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .hobby-with-img p { font-size: 12.5px; color: var(--text-dim); line-height: 1.5; }
+
+  /* ─── EXPERIENCE ─── */
+  .exp-item { border-left: 2px solid var(--border); padding-left: 28px; position: relative; margin-bottom: 36px; }
+  .exp-dot { position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--cyan); }
+  .exp-header { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 4px; }
+  .exp-header h3 { font-size: 16px; font-weight: 600; }
+  .exp-header span { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .exp-company { font-size: 13px; color: var(--cyan); opacity: 0.75; margin-bottom: 14px; }
+  .exp-item ul { padding-left: 16px; }
+  .exp-item li { font-size: 13.5px; color: var(--text-soft); line-height: 1.7; margin-bottom: 6px; list-style: disc; }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    overflow: hidden; transition: all 0.3s; position: relative;
+  }
+  .project-card:hover { background: #111116; border-color: var(--border-hover); }
+  .project-card:hover .card-glow { opacity: 1; }
+  .card-glow { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), transparent 70%); opacity: 0; transition: opacity 0.3s; }
+  .card-featured { position: absolute; top: 14px; right: 14px; z-index: 3; font-family: var(--mono); font-size: 9px; color: var(--amber); padding: 2px 8px; background: var(--amber-dim); border-radius: 4px; letter-spacing: 0.08em; }
+  .card-image { width: 100%; height: 180px; overflow: hidden; border-bottom: 1px solid var(--border); cursor: pointer; position: relative; }
+  .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .card-image:hover img { transform: scale(1.03); }
+  .card-image .expand-hint { position: absolute; bottom: 8px; right: 10px; font-family: var(--mono); font-size: 9px; color: var(--text-dim); background: rgba(0,0,0,0.6); padding: 2px 6px; border-radius: 3px; }
+  .card-body { padding: 22px 26px; }
+  .card-tag { font-family: var(--mono); font-size: 9px; color: var(--cyan); padding: 2px 8px; background: var(--cyan-dim); border-radius: 4px; letter-spacing: 0.06em; display: inline-block; margin-bottom: 8px; }
+  .card-body h3 { font-size: 17px; font-weight: 600; margin: 8px 0 10px; }
+  .card-body > p { font-size: 13px; color: var(--text-soft); line-height: 1.7; margin-bottom: 16px; }
+  .card-stack { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+  .card-stack span { font-family: var(--mono); font-size: 9.5px; color: var(--text-dim); padding: 3px 8px; border: 1px solid var(--border); border-radius: 4px; }
+  .card-links { display: flex; gap: 18px; }
+  .card-links a { font-family: var(--mono); font-size: 11px; color: var(--text-dim); transition: color 0.2s; }
+  .card-links a:hover { color: var(--cyan); }
+  .card-links .live-link { color: var(--green); }
+
+  .show-toggle {
+    font-family: var(--mono); font-size: 11px; color: var(--cyan);
+    background: var(--cyan-dim); border: 1px solid var(--border);
+    border-radius: 6px; padding: 10px 24px; cursor: pointer; transition: all 0.2s;
+  }
+  .show-toggle:hover { border-color: var(--cyan); }
+
+  /* ─── SKILLS ─── */
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .skill-cat h4 { font-family: var(--mono); font-size: 10px; font-weight: 500; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .skill-tags span { font-size: 12px; padding: 5px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; }
+
+  /* ─── EDUCATION ─── */
+  .edu-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 24px 28px; margin-bottom: 20px; }
+  .edu-header { display: flex; justify-content: space-between; flex-wrap: wrap; }
+  .edu-header h3 { font-size: 16px; font-weight: 600; }
+  .edu-header span { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .edu-degree { font-size: 13.5px; color: var(--text-soft); margin-top: 6px; }
+  .edu-meta { display: flex; gap: 16px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+  .gpa-badge { font-family: var(--mono); font-size: 11px; color: var(--green); padding: 3px 10px; background: var(--green-dim); border-radius: 4px; }
+  .edu-loc { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .edu-courses { font-size: 12px; color: var(--text-dim); margin-top: 10px; line-height: 1.5; }
+  .edu-courses span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em; }
+
+  /* ─── CONTACT ─── */
+  .contact { text-align: center; padding-bottom: 80px; }
+  .contact h2 { font-family: var(--display); font-size: 36px; font-weight: 600; margin-bottom: 16px; }
+  .contact > p { font-size: 14px; color: var(--text-soft); max-width: 460px; margin: 0 auto 36px; line-height: 1.65; }
+  .contact .btn-group { justify-content: center; }
+
+  /* ─── FOOTER ─── */
+  footer { border-top: 1px solid var(--border); padding: 28px; text-align: center; font-family: var(--mono); font-size: 11px; color: var(--text-dim); position: relative; z-index: 1; }
+
+  /* ─── MODAL ─── */
+  .modal { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.92); display: none; align-items: center; justify-content: center; cursor: zoom-out; backdrop-filter: blur(8px); }
+  .modal.open { display: flex; }
+  .modal img { max-width: 90vw; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 60px rgba(34,211,238,0.15); }
+  .modal-close { position: absolute; top: 24px; right: 32px; font-family: var(--mono); font-size: 14px; color: var(--text-dim); cursor: pointer; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 42px; }
+    .hero-content { flex-direction: column-reverse; }
+    .hero-photo { width: 180px; height: 220px; }
+    .profile-grid { grid-template-columns: 1fr; }
+    .profile-photo { width: 200px; height: 260px; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 9px; }
+    .section { padding: 60px 20px; }
+    .hero { padding-top: 120px; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav" id="navbar">
+  <div class="nav-inner">
+    <span class="nav-logo" onclick="scrollTo('home')">TNG</span>
+    <nav class="nav-links">
+      <a href="#profile">Profile</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- IMAGE MODAL -->
+<div class="modal" id="modal" onclick="closeModal()">
+  <img id="modal-img" src="" alt="" />
+  <span class="modal-close">✕ ESC</span>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<section class="section hero" id="home">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-subtitle fade-up">ML ENGINEER · ROCHESTER, NY</div>
+      <h1 class="fade-up delay-1">I Can And<br>I Will.</h1>
+      <p class="hero-name fade-up delay-2">Thejas Nagesh Gowda</p>
+      <p class="hero-degree fade-up delay-2">MS in Artificial Intelligence · RIT · 4.0 GPA</p>
+      <p class="hero-desc fade-up delay-3">
+        I build ML systems that ship — deployed on AWS, containerized with Docker, monitored with Prometheus and Grafana. From RAG pipelines to end-to-end MLOps infrastructure. No notebooks. No demos. Real systems that serve real users.
+      </p>
+      <div class="btn-group fade-up delay-4">
+        <a href="https://github.com/Thejas2003gowda" target="_blank" class="btn btn-outline">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/thejasnageshgowda/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+        <a href="mailto:tl6153@g.rit.edu" class="btn btn-filled">Contact Me</a>
+      </div>
+    </div>
+    <div class="hero-photo fade-up delay-2">
+      <!-- PUT YOUR PROFILE PIC HERE: images/profile.png -->
+      <img src="images/profile.png" alt="Thejas Nagesh Gowda" />
+    </div>
+  </div>
+  <div class="scroll-hint fade-up delay-4">
+    <span>SCROLL</span>
+    <div></div>
+  </div>
+</section>
+
+<!-- ══════ PROFILE ══════ -->
+<section class="section" id="profile">
+  <div class="section-label">Who I Am</div>
+  <div class="profile-grid">
+    <!-- Left column -->
+    <div>
+      <div class="profile-photo">
+        <img src="images/profile.png" alt="Thejas" />
+      </div>
+      <div class="quick-facts">
+        <div class="quick-facts-title">QUICK FACTS</div>
+        <div class="fact-row"><span class="fact-key">Location</span><span class="fact-val">Rochester, NY</span></div>
+        <div class="fact-row"><span class="fact-key">Program</span><span class="fact-val">MS in AI, RIT</span></div>
+        <div class="fact-row"><span class="fact-key">GPA</span><span class="fact-val">4.0 / 4.0</span></div>
+        <div class="fact-row"><span class="fact-key">From</span><span class="fact-val">Bengaluru, India</span></div>
+        <div class="fact-row"><span class="fact-key">Focus</span><span class="fact-val">Healthcare AI, MLOps</span></div>
+      </div>
+      <div class="mentor-badge">
+        <div class="mentor-badge-title">MENTORSHIP</div>
+        <p>Led coding sessions for 10+ peers in AI & Technology Club. Debugged LSTM capstone projects, ran live demos of transfer learning with ResNet & BERT.</p>
+      </div>
+    </div>
+
+    <!-- Right column -->
+    <div class="story">
+      <h2 class="story-heading">The story behind<br>the systems.</h2>
+      <p>I didn't start here. My dream was aeronautics — designing systems that fly. But life forced a change in direction, and I landed in computer science. Then a health crisis with my father showed me how broken and slow medical decision-making can be. That was the moment AI stopped being a career choice and became personal. I wanted to build systems that genuinely serve people — not just score well on clean test sets.</p>
+      <p>Today I build production-grade ML systems — deployed, containerized, monitored pipelines that work in the real world. I'm pursuing my MS in Artificial Intelligence at RIT with a 4.0 GPA, and every project I take on is built with one question: does this actually solve a problem?</p>
+      <p>Before RIT, I mentored 10+ peers in my university's AI & Technology Club — leading coding sessions on NumPy operations, gradient computation, debugging vanishing gradient issues in LSTM capstone projects, and running live demos of transfer learning with pretrained ResNet and BERT models. Teaching sharpened how I think about problems: anchoring in shared understanding, building intuition before formalism.</p>
+      <p>The setbacks taught me something simple — you either stop, or you push through. I chose the latter.</p>
+
+      <div class="hobbies-title">BEYOND THE CODE</div>
+
+      <!-- Gym with image -->
+      <div class="hobby-with-img">
+        <div class="hobby-img">
+          <!-- PUT YOUR GYM PIC HERE: images/gym.png -->
+          <img src="images/gym.png" alt="At the gym" />
+        </div>
+        <div class="hobby-text">
+          <h4>Fitness</h4>
+          <p>The gym is my reset. Discipline in training carries over to everything else.</p>
+        </div>
+      </div>
+
+      <div class="hobby-card">
+        <span class="icon">🔬</span>
+        <div>
+          <h4>Research Rabbit Holes</h4>
+          <p>From liquid neural networks to orbit determination — if it's a hard unsolved problem, I'm interested.</p>
+        </div>
+      </div>
+
+      <div class="hobby-card">
+        <span class="icon">🚀</span>
+        <div>
+          <h4>Aeronautics (Still)</h4>
+          <p>The dream shifted, but the fascination didn't. I still follow space missions and orbital mechanics.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ EXPERIENCE ══════ -->
+<section class="section" id="experience">
+  <div class="section-label">Experience</div>
+
+  <div class="exp-item">
+    <div class="exp-dot"></div>
+    <div class="exp-header">
+      <h3>AI/ML Engineering Intern</h3>
+      <span>Sep 2024 – Feb 2025</span>
+    </div>
+    <p class="exp-company">Rooman Technologies · Bengaluru, India</p>
+    <ul>
+      <li>Engineered a modular chatbot integrating Hugging Face Transformers, Google Speech-to-Text, fine-tuned DistilBERT for sentiment analysis, and MarianMT for multilingual translation — serving 500+ daily interactions across 3 languages.</li>
+      <li>Architected Docker-containerized microservices with batched inference and async request handling, deployed on AWS EC2 with Flask, Gunicorn, and Nginx — reducing response latency by 35%.</li>
+      <li>Maintained CI/CD-aligned deployment on Linux servers with structured logging and automated health checks, achieving 99.2% uptime over 4 months.</li>
+    </ul>
+  </div>
+
+  <div class="exp-item">
+    <div class="exp-dot"></div>
+    <div class="exp-header">
+      <h3>AI Intern</h3>
+      <span>Jan 2024 – Apr 2024</span>
+    </div>
+    <p class="exp-company">Retail Kloud9 Technologies · Bengaluru, India</p>
+    <ul>
+      <li>Designed an LSTM-based demand forecasting pipeline on Azure ML Studio for Family Dollar — engineered lag, trend, and seasonal features with Pandas, benchmarked against ARIMA and exponential smoothing baselines.</li>
+      <li>Reduced inventory overstock by 18% across 12 product categories, achieving MAPE of 8.4% on held-out retail data via rolling-window cross-validation and bias-variance diagnostics.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ══════ PROJECTS ══════ -->
+<section class="section" id="projects">
+  <div class="section-label">Projects</div>
+  <div class="projects-grid" id="projects-grid">
+    <!-- Filled by JS -->
+  </div>
+  <button class="show-toggle" id="show-toggle" onclick="toggleProjects()">Show All 8 Projects</button>
+</section>
+
+<!-- ══════ SKILLS ══════ -->
+<section class="section" id="skills">
+  <div class="section-label">Technical Skills</div>
+  <div class="skills-grid" id="skills-grid">
+    <!-- Filled by JS -->
+  </div>
+</section>
+
+<!-- ══════ EDUCATION ══════ -->
+<section class="section" id="education">
+  <div class="section-label">Education</div>
+
+  <div class="edu-card">
+    <div class="edu-header"><h3>Rochester Institute of Technology</h3><span>Aug 2025 – Present</span></div>
+    <p class="edu-degree">M.S. in Artificial Intelligence</p>
+    <div class="edu-meta"><span class="gpa-badge">GPA: 4.0 / 4.0</span><span class="edu-loc">Rochester, NY</span></div>
+    <p class="edu-courses"><span>COURSEWORK: </span>ML Foundations, Mathematical Methods for AI, Ethics of AI, Research Methods, NLP & LLMs</p>
+  </div>
+
+  <div class="edu-card">
+    <div class="edu-header"><h3>Sri Venkateshwara College of Engineering</h3><span>2021 – 2025</span></div>
+    <p class="edu-degree">B.E. in Computer Science & Engineering (AI)</p>
+    <div class="edu-meta"><span class="gpa-badge">GPA: 3.6 / 4.0</span><span class="edu-loc">Bengaluru, India</span></div>
+  </div>
+</section>
+
+<!-- ══════ CONTACT ══════ -->
+<section class="section contact" id="contact">
+  <div class="section-label" style="justify-content:center">Get In Touch</div>
+  <h2>Let's build something<br>that matters.</h2>
+  <p>Open to ML/AI engineering roles, research collaborations, and hard problems worth solving.</p>
+  <div class="btn-group">
+    <a href="mailto:tl6153@g.rit.edu" class="btn btn-filled">tl6153@g.rit.edu</a>
+    <a href="https://github.com/Thejas2003gowda" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    <a href="https://www.linkedin.com/in/thejasnageshgowda/" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+  </div>
+</section>
+
+<footer>© 2026 Thejas Nagesh Gowda · Built with purpose.</footer>
+
+<script>
+// ─── DATA ───
+const PROJECTS = [
+  {
+    title: "Smart Doc QA", tag: "RAG · NLP", featured: true,
+    stack: ["Python","FastAPI","ChromaDB","Sentence-Transformers","OpenAI","Docker","GitHub Actions"],
+    desc: "Production RAG pipeline: PDF ingestion → semantic chunking → vector search → LLM-generated answers with source citations. Precision@1 of 0.80, MRR of 0.90. Containerized with Docker, CI/CD via GitHub Actions, deployed to Streamlit Cloud.",
+    github: "https://github.com/Thejas2003gowda/smart-doc-qa",
+    live: "https://smart-doc-app-mp4nvpcbewlyldujv8zp26.streamlit.app/",
+    image: null,
+  },
+  {
+    title: "Churn MLOps Pipeline", tag: "MLOps · XGBoost", featured: true,
+    stack: ["XGBoost","MLflow","DVC","FastAPI","Docker","Prometheus","Grafana"],
+    desc: "End-to-end ML pipeline for customer churn prediction. Experiment tracking (MLflow), data versioning (DVC), model serving via FastAPI, and production monitoring with Prometheus + Grafana dashboards.",
+    github: "https://github.com/Thejas2003gowda/churn-mlops",
+    live: null, image: null,
+  },
+  {
+    title: "GA Feature Selection — Genetic Anomaly Detection", tag: "Research · Optimization", featured: true,
+    stack: ["Python","Scikit-learn","SVM-RBF","Genetic Algorithms","Mutual Information"],
+    desc: "Hybrid filter-wrapper pipeline on 20,264-gene RNA-Seq data. 99.8% dimensionality reduction (20,264 → 42 genes) at 0.994 accuracy. Guided by Prof. Cecilia O. Alm, RIT.",
+    github: null, live: null,
+    image: "images/ga_poster.png",
+  },
+  {
+    title: "Emergency Vehicle Detection & Tracking", tag: "Computer Vision", featured: true,
+    stack: ["YOLOv8","DeepSORT","Streamlit","Linux"],
+    desc: "Real-time detection and tracking on live video at ≥15 FPS. mAP@0.5 of 94.7% with sub-second signal control latency. Live traffic monitoring dashboard with congestion analysis and lane-level metrics.",
+    github: null, live: null,
+    image: "images/traffic_dashboard.png",
+  },
+  {
+    title: "Angles-Only Orbit Determination", tag: "Research · Physics", featured: false,
+    stack: ["Python","NumPy","SciPy","L-BFGS-B","RK4"],
+    desc: "Reformulated orbit determination as constrained optimization. ECI frame transforms, J2 perturbation modeling, convergence stabilization. Self-initiated collaboration with Prof. Mihail Barbosu, RIT.",
+    github: null, live: null, image: null,
+  },
+  {
+    title: "Hierarchical Liquid Neural Networks", tag: "Research · Deep Learning", featured: false,
+    stack: ["PyTorch","Liquid Neural Networks","ODE Dynamics","Activation Pruning"],
+    desc: "Independent research inspired by Dr. Daniela Rus's lecture on Physical AI at RIT. Two-tier LNN architecture with sparse neuron selection via activation magnitude pruning for interpretability.",
+    github: null, live: null, image: null,
+  },
+  {
+    title: "Spam News Detection", tag: "NLP · Classification", featured: false,
+    stack: ["Python","Scikit-learn","TF-IDF","NLP"],
+    desc: "Text classification pipeline for detecting spam/fake news articles using NLP preprocessing and classical ML models.",
+    github: "https://github.com/Thejas2003gowda/spam-news-detection",
+    live: null, image: null,
+  },
+  {
+    title: "Breast Cancer Prediction", tag: "ML · Healthcare", featured: false,
+    stack: ["Scikit-learn","Logistic Regression","SVM","Random Forest"],
+    desc: "Benchmarked classical ML models on clinical datasets with stratified CV. ROC-AUC of 0.98. Precision-recall tradeoff analysis for clinical decision support.",
+    github: "https://github.com/Thejas2003gowda/Breast-Cancer-Prediction-in-Mchine-learning",
+    live: null, image: null,
+  },
+];
+
+const SKILLS_DATA = {
+  "AI / ML": ["Machine Learning","Deep Learning","NLP","Computer Vision","Genetic Algorithms","Feature Engineering","Bayesian Decision Theory","Statistical Validation"],
+  "Languages & Frameworks": ["Python","PyTorch","TensorFlow","Scikit-learn","Hugging Face Transformers","Flask","FastAPI","OpenCV"],
+  "MLOps & Deployment": ["Docker","MLflow","DVC","GitHub Actions CI/CD","Prometheus","Grafana","AWS EC2","Azure ML Studio","REST APIs","Gunicorn","Nginx"],
+  "Infrastructure & Tools": ["Linux","Git","ChromaDB","Streamlit","NumPy","SciPy","Pandas","Cookiecutter DS"],
+};
+
+// ─── RENDER ───
+let showAll = false;
+
+function renderProjects() {
+  const grid = document.getElementById('projects-grid');
+  const list = showAll ? PROJECTS : PROJECTS.filter(p => p.featured);
+  grid.innerHTML = list.map(p => `
+    <div class="project-card">
+      <div class="card-glow"></div>
+      ${p.featured ? '<span class="card-featured">FEATURED</span>' : ''}
+      ${p.image ? `
+        <div class="card-image" onclick="openModal('${p.image}', '${p.title}')">
+          <img src="${p.image}" alt="${p.title}" />
+          <span class="expand-hint">Click to expand</span>
+        </div>
+      ` : ''}
+      <div class="card-body">
+        <span class="card-tag">${p.tag}</span>
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+        <div class="card-stack">${p.stack.map(t => `<span>${t}</span>`).join('')}</div>
+        ${(p.github || p.live) ? `
+          <div class="card-links">
+            ${p.github ? `<a href="${p.github}" target="_blank">↗ Code</a>` : ''}
+            ${p.live ? `<a href="${p.live}" target="_blank" class="live-link">● Live</a>` : ''}
+          </div>
+        ` : ''}
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('show-toggle').textContent = showAll ? 'Show Featured Only' : `Show All ${PROJECTS.length} Projects`;
+}
+
+function toggleProjects() {
+  showAll = !showAll;
+  renderProjects();
+}
+
+function renderSkills() {
+  const grid = document.getElementById('skills-grid');
+  grid.innerHTML = Object.entries(SKILLS_DATA).map(([cat, items]) => `
+    <div class="skill-cat">
+      <h4>${cat}</h4>
+      <div class="skill-tags">${items.map(s => `<span>${s}</span>`).join('')}</div>
+    </div>
+  `).join('');
+}
+
+// ─── MODAL ───
+function openModal(src, alt) {
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-img').src = src;
+  document.getElementById('modal-img').alt = alt;
+  modal.classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ─── NAV SCROLL ───
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ─── INIT ───
+renderProjects();
+renderSkills();
+</script>
+</body>
+</html>
